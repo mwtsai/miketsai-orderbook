@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1 Currencies List
+
+  form(action=`/bittrex/markets`, method="GET")
+    .currency
+      select(name="currencySymbol")
+        each currency in currencies
+          option(value=currency.symbol) #{currency.symbol}
+    .currency.button
+      button(type="submit") Get Markets
+
+
+    

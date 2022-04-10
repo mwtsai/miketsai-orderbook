@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1 Markets List
+
+  .markets
+    table
+      tr 
+        th Market Symbol
+        th Base Currency Symbol
+        th Quote Currency Symbol
+        th Min Trade Size
+      each market in markets
+        tr
+          td
+            form(action=`/bittrex/markets/${market.symbol}/orderbook`, method="GET")
+              input(name="bidAggTotalLimit", value="5", style="display: none")
+              input(name="askAggSizeLimit", value="150", style="display: none")
+              .markets.button
+                button(type="submit")= market.symbol 
+          td= market.baseCurrencySymbol
+          td= market.quoteCurrencySymbol
+          td= market.minTradeSize
+
+
+
+    

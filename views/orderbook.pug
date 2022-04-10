@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  h1= marketSymbol
+
+  form(action=`/bittrex/markets/${marketSymbol}/orderbook`, method="GET")
+    .limit.bid.left
+      h3 Bid Limit
+      p 
+        | Agg. Size
+        input(name="bidAggSizeLimit", value=filterItem.bidAggSizeLimit)
+        | Agg. Total
+        input(name="bidAggTotalLimit", value=filterItem.bidAggTotalLimit)
+    .limit.ask.right
+      h3 Ask Limit
+      p 
+        | Agg. Size
+        input(name="askAggSizeLimit", value=filterItem.askAggSizeLimit)
+        | Agg. Total
+        input(name="askAggTotalLimit", value=filterItem.askAggTotalLimit)
+    .limit.button
+      button(type="submit") Limit
+
+  .orderbook.bid.left
+    table
+      tr 
+        th Agg. Total
+        th Total
+        th Agg. Size
+        th Size
+        th Bid
+      each bid in orderbook.bid
+        tr
+          td= bid.aggTotal
+          td= bid.total
+          td= bid.aggQuantity
+          td= bid.quantity
+          td.satoshi.up= bid.rate
+  .orderbook.ask.right
+    table
+      tr 
+        th Ask
+        th Size
+        th Agg. Size
+        th Total
+        th Agg. Total
+      each ask in orderbook.ask
+        tr
+          td.satoshi.down= ask.rate
+          td= ask.quantity
+          td= ask.aggQuantity
+          td= ask.total
+          td= ask.aggTotal
+
+
+
+    

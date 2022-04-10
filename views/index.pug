@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  form(action="/markets", method="GET")
+    div
+      button(type="submit").btn.btn-primary Get Started
+
+
+  each data in datas
+    ul
+      ui=data.symbol
+      ui=data.baseCurrencySymbol 
+
+    

@@ -1,0 +1,165 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: block;
+  text-align: center;
+}
+
+body.black {
+  background: #050b13;
+  color: white;
+}
+
+th {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+h2 {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+p {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+a {
+  color: #00B7FF;
+}
+
+input {
+  height: 32px;
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 18px 0 0;
+  color: white;
+  border: 1px solid rgba(187, 205, 240, 0.15);
+  font-size: 12px;
+  background: rgba(187, 205, 240, 0.02);
+  line-height: 16px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 80%);
+  z-index: 1;
+  border-radius: 2px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+select {
+  height: 32px;
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 18px 0 0;
+  color: white;
+  border: 1px solid rgba(187, 205, 240, 0.15);
+  font-size: 12px;
+  background: rgba(187, 205, 240, 0.02);
+  line-height: 16px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 80%);
+  z-index: 1;
+  border-radius: 2px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #0081eb;
+  text-align: center;
+  justify-content: center;
+  color: #ffffff !important;
+  height: 32px;
+  padding: 8px 10px;
+}
+
+th {
+  padding-left: 60px;
+}
+
+.content {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.currency {
+  width: 100%;
+  float: left;
+  flex: auto;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  text-align: right;
+  align-items: center;
+}
+
+.currency.button {
+  width: 100%;
+}
+
+.markets {
+  width: 100%;
+  float: left;
+  flex: auto;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  text-align: right;
+  align-items: center;
+}
+
+.markets.button {
+  width: 100%;
+}
+
+.orderbook {
+  width: 50%;
+  float: left;
+  flex: auto;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  text-align: right;
+}
+
+.limit {
+  width: 45%;
+  float: left;
+  flex: auto;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.limit.left {
+  align-items: end;
+  text-align: right;
+}
+
+.limit.right {
+  margin-left: 10%;
+  align-items: start;
+  text-align: right;
+}
+
+.limit.button {
+  width: 100%;
+}
+
+.satoshi.up {
+  color: #23d886;
+}
+
+.satoshi.down {
+  color: #e56846;
+}
