@@ -47,7 +47,8 @@ exports.getOrderbook = function (req, res, next) {
   // Data
   let orderbook;
 
-  const socket = io("ws://localhost:3000");
+  const port = normalizePort(process.env.PORT || '3000');;
+  const socket = io(`ws://localhost:${port}`);
 
   socket.on('connect', () => {
     const socketId = socket.id;
@@ -164,4 +165,20 @@ function assembleOrderbook(orderbook, filterItem, callback) {
   filter(orderbook, filterItem);
 
   callback(orderbook);
+}
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
 }
