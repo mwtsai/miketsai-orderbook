@@ -55,7 +55,7 @@ block content
             td= ask.aggTotal
 
   script. 
-    const socket = io('ws://127.0.0.1:3000'); 
+    const socket = io(); 
     const socketId = document.getElementById('socketId').value;
     const marketSymbol = document.getElementById('marketSymbol').innerText;
     let orderbook = document.getElementById('orderbook');
