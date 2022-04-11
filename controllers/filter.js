@@ -20,7 +20,9 @@ function filter(orderbook, filterItem) {
 
 function filterLimit(arr, field, filterItem) {
     if (filterItem) {
-        return arr.filter(el => Number(el[field]) < filterItem);
+        return arr.filter(el => {
+            return Number(el[field]) < filterItem
+        });
     } else {
         return arr;
     }

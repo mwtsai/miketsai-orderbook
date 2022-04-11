@@ -1,10 +1,11 @@
 extends layout
 
 block content
-  h1= marketSymbol
+  h1#marketSymbol= marketSymbol
 
-  form(action=`/bittrex/markets/${marketSymbol}/orderbook`, method="GET")
+  form#form(action=`/bittrex/markets/${marketSymbol}/orderbook`, method="GET")
     .limit.bid.left
+      input#socketId(style="display:none", value=socketId)
       h3 Bid Limit
       p 
         | Agg. Size
@@ -21,37 +22,159 @@ block content
     .limit.button
       button(type="submit") Limit
 
-  .orderbook.bid.left
-    table
-      tr 
-        th Agg. Total
-        th Total
-        th Agg. Size
-        th Size
-        th Bid
-      each bid in orderbook.bid
-        tr
-          td= bid.aggTotal
-          td= bid.total
-          td= bid.aggQuantity
-          td= bid.quantity
-          td.satoshi.up= bid.rate
-  .orderbook.ask.right
-    table
-      tr 
-        th Ask
-        th Size
-        th Agg. Size
-        th Total
-        th Agg. Total
-      each ask in orderbook.ask
-        tr
-          td.satoshi.down= ask.rate
-          td= ask.quantity
-          td= ask.aggQuantity
-          td= ask.total
-          td= ask.aggTotal
+  div#orderbook
+    .orderbook.bid.left
+      table
+        tr 
+          th Agg. Total
+          th Total
+          th Agg. Size
+          th Size
+          th Bid
+        each bid in orderbook.bid
+          tr
+            td= bid.aggTotal
+            td= bid.total
+            td= bid.aggQuantity
+            td= bid.quantity
+            td.satoshi.up= bid.rate
+    .orderbook.ask.right
+      table
+        tr 
+          th Ask
+          th Size
+          th Agg. Size
+          th Total
+          th Agg. Total
+        each ask in orderbook.ask
+          tr
+            td.satoshi.down= ask.rate
+            td= ask.quantity
+            td= ask.aggQuantity
+            td= ask.total
+            td= ask.aggTotal
 
+  script. 
+    const socket = io('ws://127.0.0.1:3000'); 
+    const socketId = document.getElementById('socketId').value;
+    const marketSymbol = document.getElementById('marketSymbol').innerText;
+    let orderbook = document.getElementById('orderbook');
+    // Connect to controller
+    socket.on('connect', function() {
+      socket.emit(socketId, socket.id);     
+    });
+    // Parse data
+    socket.on(`${socketId}_${marketSymbol}`, function(msg) {
+      let div = document.createElement("div");
+      div.id = 'orderbook';
 
+      let divBid = document.createElement('div');
+      divBid.classList.add('orderbook');
+      divBid.classList.add('bid');
+      divBid.classList.add('left');
+      div.appendChild(divBid);
 
-    
+      let tableBid = document.createElement('table');
+      divBid.appendChild(tableBid);
+
+      let tbodyBid = document.createElement('tbody');
+      tableBid.appendChild(tbodyBid);
+
+      let trBid_0 = document.createElement('tr');
+      tbodyBid.appendChild(trBid_0);
+
+      let thBid_0_1 = document.createElement('th');
+      let thBid_0_2 = document.createElement('th');
+      let thBid_0_3 = document.createElement('th');
+      let thBid_0_4 = document.createElement('th');
+      let thBid_0_5 = document.createElement('th');
+      thBid_0_1.innerText = 'Agg. Total';
+      thBid_0_2.innerText = 'Total';
+      thBid_0_3.innerText = 'Agg. Size';
+      thBid_0_4.innerText = 'Size';
+      thBid_0_5.innerText = 'Bid';
+      trBid_0.appendChild(thBid_0_1);
+      trBid_0.appendChild(thBid_0_2);
+      trBid_0.appendChild(thBid_0_3);
+      trBid_0.appendChild(thBid_0_4);
+      trBid_0.appendChild(thBid_0_5);
+
+      msg.bid.forEach(element => {
+        let trBid = document.createElement('tr');
+        let tdBid_1 = document.createElement('td');
+        let tdBid_2 = document.createElement('td');
+        let tdBid_3 = document.createElement('td');
+        let tdBid_4 = document.createElement('td');
+        let tdBid_5 = document.createElement('td');
+        tdBid_1.innerText = element.aggTotal;
+        tdBid_2.innerText = element.total;
+        tdBid_3.innerText = element.aggQuantity;
+        tdBid_4.innerText = element.quantity;
+        tdBid_5.innerText = element.rate;
+        tdBid_5.classList.add('satoshi');
+        tdBid_5.classList.add('up');
+        trBid.appendChild(tdBid_1);
+        trBid.appendChild(tdBid_2);
+        trBid.appendChild(tdBid_3);
+        trBid.appendChild(tdBid_4);
+        trBid.appendChild(tdBid_5);
+        tbodyBid.appendChild(trBid);
+      }); 
+
+      let divAsk = document.createElement('div');
+      divAsk.classList.add('orderbook');
+      divAsk.classList.add('ask');
+      divAsk.classList.add('right');
+      div.appendChild(divAsk);
+
+      let tableAsk = document.createElement('table');
+      divAsk.appendChild(tableAsk);
+
+      let tbodyAsk = document.createElement('tbody');
+      tableAsk.appendChild(tbodyAsk);
+
+      let trAsk_0 = document.createElement('tr');
+      tbodyAsk.appendChild(trAsk_0);
+
+      let thAsk_0_1 = document.createElement('th');
+      let thAsk_0_2 = document.createElement('th');
+      let thAsk_0_3 = document.createElement('th');
+      let thAsk_0_4 = document.createElement('th');
+      let thAsk_0_5 = document.createElement('th');
+      thAsk_0_1.innerText = 'Ask';
+      thAsk_0_2.innerText = 'Size';
+      thAsk_0_3.innerText = 'Agg. Size';
+      thAsk_0_4.innerText = 'Total';
+      thAsk_0_5.innerText = 'Agg. Total';
+      trAsk_0.appendChild(thAsk_0_1);
+      trAsk_0.appendChild(thAsk_0_2);
+      trAsk_0.appendChild(thAsk_0_3);
+      trAsk_0.appendChild(thAsk_0_4);
+      trAsk_0.appendChild(thAsk_0_5);
+
+      msg.ask.forEach(element => {
+        let trAsk = document.createElement('tr');
+        let tdAsk_1 = document.createElement('td');
+        let tdAsk_2 = document.createElement('td');
+        let tdAsk_3 = document.createElement('td');
+        let tdAsk_4 = document.createElement('td');
+        let tdAsk_5 = document.createElement('td');
+        tdAsk_1.innerText = element.rate;
+        tdAsk_1.classList.add('satoshi');
+        tdAsk_1.classList.add('down');
+        tdAsk_2.innerText = element.quantity;
+        tdAsk_3.innerText = element.aggQuantity;
+        tdAsk_4.innerText = element.total;
+        tdAsk_5.innerText = element.aggTotal;
+        trAsk.appendChild(tdAsk_1);
+        trAsk.appendChild(tdAsk_2);
+        trAsk.appendChild(tdAsk_3);
+        trAsk.appendChild(tdAsk_4);
+        trAsk.appendChild(tdAsk_5);
+        tbodyAsk.appendChild(trAsk);
+      }); 
+
+      orderbook.innerHTML = '';
+      orderbook.appendChild(divBid);
+      orderbook.appendChild(divAsk);
+    });

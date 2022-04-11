@@ -16,6 +16,7 @@ function restApi(path, calllback) {
 
   }).on('error', (e) => {
     console.error(e);
+    console.error(e);
   });
 }
 

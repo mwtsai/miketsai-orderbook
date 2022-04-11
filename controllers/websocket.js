@@ -9,9 +9,11 @@ const apikey = '';
 var client;
 var resolveInvocationPromise = () => { };
 
-async function webSocket(marketSymbol, subscribeCb, messageReceivedCb) {
-  client = await connect(messageReceivedCb);
-  await subscribe(client, marketSymbol, subscribeCb);
+// Connect to Websocket and Subscribe the orderbook
+async function webSocket(marketSymbol, callback) {
+  client = await connect(callback);
+  await subscribe(client, marketSymbol);
+  return client;
 }
 
 async function connect(callback) {
@@ -20,7 +22,6 @@ async function connect(callback) {
     client.serviceHandlers.messageReceived = (message) => {
       messageReceived(message, callback);
     }
-    client.closesdd
     client.serviceHandlers.disconnected = () => {
       console.log('Disconnected');
     }
@@ -31,7 +32,7 @@ async function connect(callback) {
   });
 }
 
-async function subscribe(client, marketSymbol, callback) {
+async function subscribe(client, marketSymbol) {
   const channels = [
     `orderbook_${marketSymbol}_25`
   ];
@@ -39,7 +40,7 @@ async function subscribe(client, marketSymbol, callback) {
 
   for (var i = 0; i < channels.length; i++) {
     if (response[i]['Success']) {
-      callback(channels[i]);
+      console.log('Subscription to "' + channels[i] + '" successful');
     }
     else {
       console.log('Subscription to "' + channels[i] + '" failed: ' + response[i]['ErrorCode']);
